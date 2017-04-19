@@ -1,0 +1,296 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="http://nightwatchjs.org"
+
+    >nightwatch (v0.9.14)</a>
+</h1>
+<h4>A node.js bindings implementation for selenium 2.0/webdriver</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.nightwatch">module nightwatch</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.nightwatch.CliRunner">
+            function <span class="apidocSignatureSpan">nightwatch.</span>CliRunner
+            <span class="apidocSignatureSpan">(argv)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.nightwatch.cli">
+            function <span class="apidocSignatureSpan">nightwatch.</span>cli
+            <span class="apidocSignatureSpan">(runTests)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.nightwatch.client">
+            function <span class="apidocSignatureSpan">nightwatch.</span>client
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.nightwatch.initClient">
+            function <span class="apidocSignatureSpan">nightwatch.</span>initClient
+            <span class="apidocSignatureSpan">(opts)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.nightwatch.initGrunt">
+            function <span class="apidocSignatureSpan">nightwatch.</span>initGrunt
+            <span class="apidocSignatureSpan">(grunt)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.nightwatch.runner">
+            function <span class="apidocSignatureSpan">nightwatch.</span>runner
+            <span class="apidocSignatureSpan">(argv, done, settings)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.nightwatch" id="apidoc.module.nightwatch">module nightwatch</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.nightwatch.CliRunner" id="apidoc.element.nightwatch.CliRunner">
+        function <span class="apidocSignatureSpan">nightwatch.</span>CliRunner
+        <span class="apidocSignatureSpan">(argv)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">CliRunner = function (argv) {
+  var CliRunner = require(&#x27;./runner/cli/clirunner.js&#x27;);
+  return new CliRunner(argv);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.nightwatch.cli" id="apidoc.element.nightwatch.cli">
+        function <span class="apidocSignatureSpan">nightwatch.</span>cli
+        <span class="apidocSignatureSpan">(runTests)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">cli = function (runTests) {
+  var cli = require(&#x27;./runner/cli/cli.js&#x27;);
+  cli.setup();
+
+  var argv = cli.init();
+  if (argv.help) {
+    cli.showHelp();
+  } else if (argv.version) {
+    var packageConfig = require(__dirname + &#x27;/../package.json&#x27;);
+    console.log(packageConfig.name + &#x27; v&#x27; + packageConfig.version);
+  } else {
+    if (typeof runTests != &#x27;function&#x27;) {
+      throw new Error(&#x27;Supplied argument needs to be a function!&#x27;);
+    }
+    runTests(argv);
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+/**
+ * Module dependencies
+ */
+var Nightwatch = require(&#x27;../lib/index.js&#x27;);
+var Utils = require(&#x27;../lib/util/utils.js&#x27;);
+
+try {
+  Nightwatch.<span class="apidocCodeKeywordSpan">cli</span>(function(argv) {
+    argv._source = argv[&#x27;_&#x27;].slice(0);
+    Nightwatch.runner(argv);
+  });
+} catch (ex) {
+  Utils.showStackTraceWithHeadline(&#x27;There was an error while starting the test runner:\n&#x27;, ex.stack + &#x27;\n&#x27;,
+true);
+  process.exit(2);
+}
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.nightwatch.client" id="apidoc.element.nightwatch.client">
+        function <span class="apidocSignatureSpan">nightwatch.</span>client
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">client = function (options) {
+  return new Nightwatch(options);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.nightwatch.initClient" id="apidoc.element.nightwatch.initClient">
+        function <span class="apidocSignatureSpan">nightwatch.</span>initClient
+        <span class="apidocSignatureSpan">(opts)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">initClient = function (opts) {
+  var Manager = require(&#x27;./runner/clientmanager.js&#x27;);
+  var instance = new Manager();
+  return instance.init(opts);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.nightwatch.initGrunt" id="apidoc.element.nightwatch.initGrunt">
+        function <span class="apidocSignatureSpan">nightwatch.</span>initGrunt
+        <span class="apidocSignatureSpan">(grunt)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">initGrunt = function (grunt) {
+  grunt.registerMultiTask(&#x27;nightwatch&#x27;, &#x27;run nightwatch.&#x27;, function() {
+    var done = this.async();
+    var options = this.options();
+    var settings = this.data &#x26;&#x26; this.data.settings;
+    var argv = this.data &#x26;&#x26; this.data.argv;
+
+    exports.cli(function(a) {
+      Object.keys(argv).forEach(function(key) {
+        if (key === &#x27;env&#x27; &#x26;&#x26; a[&#x27;parallel-mode&#x27;] === true) {
+          return;
+        }
+        a[key] = argv[key];
+      });
+
+      if (a.test) {
+        a.test = path.resolve(a.test);
+      }
+
+      if (options.cwd) {
+        process.chdir(options.cwd);
+      }
+
+      exports.runner(a, done, settings);
+    });
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.nightwatch.runner" id="apidoc.element.nightwatch.runner">
+        function <span class="apidocSignatureSpan">nightwatch.</span>runner
+        <span class="apidocSignatureSpan">(argv, done, settings)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">runner = function (argv, done, settings) {
+  var runner = exports.CliRunner(argv);
+  return runner.setup(settings, done).runTests(done);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+ */
+var Nightwatch = require(&#x27;../lib/index.js&#x27;);
+var Utils = require(&#x27;../lib/util/utils.js&#x27;);
+
+try {
+  Nightwatch.cli(function(argv) {
+    argv._source = argv[&#x27;_&#x27;].slice(0);
+    Nightwatch.<span class="apidocCodeKeywordSpan">runner</span>(argv);
+  });
+} catch (ex) {
+  Utils.showStackTraceWithHeadline(&#x27;There was an error while starting the test runner:\n&#x27;, ex.stack + &#x27;\n&#x27;,
+true);
+  process.exit(2);
+}
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
